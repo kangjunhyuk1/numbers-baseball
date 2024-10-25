@@ -1,86 +1,67 @@
 package numplay;
 
-import java.util.Random;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Collections;
+import java.util.*;
 
 public class RandomNum {
 
     Random random = new Random();
-    HashSet<Integer> randomNumberList = new HashSet<>();
-    ArrayList<Integer> shuffleNumbersList = new ArrayList<>();
+    HashSet<Integer> playNum = new HashSet<>();
+    int strike;
 
-    private int strikeCount;
+    int ball;
 
-    private int ballCount;
+    int outCount;
 
-    private int outCount;
+    int gameCount;
 
-    private int gameCount;
+    int firstNum;
+
+    int secondNum;
+
+    int thirdNum;
 
 
-    public RandomNum() {
+    public int gameStart (int num1, int num2, int num3){
 
-        while (randomNumberList.size() < 3) {
-            randomNumberList.add(random.nextInt(9) + 1);
+        Scanner sc = new Scanner(System.in);
+
+        while (playNum.size() < 3) {
+            playNum.add(random.nextInt(9) + 1);
         }
-        shuffleNumbersList = new ArrayList<>(randomNumberList);
-        Collections.shuffle(shuffleNumbersList);
-        System.out.println(shuffleNumbersList);
-    }
+        ArrayList<Integer> playList = new ArrayList<>(playNum);
+        Collections.shuffle(playList);
+        System.out.println(playList);
+        int firstNum = playList.get(0);
+        int secondNum = playList.get(1);
+        int thirdNum = playList.get(2);
+        System.out.println(firstNum + "" + secondNum + "" + thirdNum);
 
-    public int gameStart(ArrayList<Integer> playerAnswer) {
-        gameCount++;
         while (true) {
+            int answer = Integer.parseInt(sc.nextLine());
 
-            ArrayList<Integer> playersAnswer = new ArrayList<>(playerAnswer);
-
-            for (int i = 0; i <= 2; i++) {
-
-                if (playersAnswer.get(i) == shuffleNumbersList.get(i)) {
-                    strikeCount++;
-                } else if (randomNumberList.contains(playersAnswer.get(i))) {
-                    boolean isBall = randomNumberList.contains(playersAnswer.get(i));
-                    if (isBall) {
-                        ballCount++;
-                    }
-                }
+            if (0 > answer || answer < 1000){
+                System.out.println("잘못된 값입니다");
             }
+            System.out.println(answer);
+            break;
 
-            if (strikeCount == 3) {
-                System.out.println("정답!");
-            } else if (ballCount > 0 || strikeCount > 0) {
-                System.out.println(ballCount + "ball " + strikeCount + "strike");
-            }else {
-                System.out.println("out!");
-            }
-            playerAnswer.clear();
-            return gameCount;
+        }
+        return 0;
+    }
+
+    public int hundredNum (int number1) {
+        if (number1 == firstNum) {
+            return strike ++;
+        }else if (number1 == secondNum || number1 == thirdNum) {
+            return ball ++;
+        }else {
+            return outCount ++;
         }
     }
 
-    public int getStrikeCount() {
-        return strikeCount;
-    }
-
-    public int getBallCount() {
-        return ballCount;
-    }
-
-    public int getOutCount() {
-        return outCount;
-    }
-
-    public int getGameCount() {
-        return gameCount;
-    }
-
-    public void resetCount () {
-        strikeCount = 0;
-        ballCount = 0;
+    public int strikeZone (int strike) {
+        this.strike = strike++;
+        return strike;
     }
 }
-
-
 
